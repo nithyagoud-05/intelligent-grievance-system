@@ -1,0 +1,9 @@
+{
+  "name": "my-first-backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
