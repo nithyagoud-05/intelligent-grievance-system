@@ -1,37 +1,34 @@
+require("dotenv").config();
 const express = require("express");
-<<<<<<< Updated upstream
+const mongoose = require("mongoose");
 
 const app = express();
 
-=======
-const app = express();
-
+// 🟢 MIDDLEWARE
 app.use(express.json());
 
->>>>>>> Stashed changes
+// 🔗 DATABASE CONNECTION
+mongoose.connect(process.env.MONGO_URI)
+.then(() => console.log("MongoDB Connected ✅"))
+.catch((err) => console.log("DB Error ❌", err));
+const cors = require("cors");
+app.use(cors());
+// 📦 ROUTES
+const grievanceRoutes = require("./routes/grievanceRoutes");
+app.use("/api/grievances", grievanceRoutes);
+
+// 🧪 TEST ROUTE
 app.get("/", (req, res) => {
-    res.send("Hello 🚀 Backend is running!");
+    res.send("Backend running 🚀");
 });
 
-<<<<<<< Updated upstream
-app.listen(3000, () => {
-    console.log("Server running on http://localhost:3000");
-});
-=======
-app.post("/grievance", (req, res) => {
-    const grievanceData = req.body;
+// ❗ ERROR HANDLER (ALWAYS LAST)
+const errorHandler = require("./middleware/errorHandler");
+app.use(errorHandler);
 
-    console.log("Received:", grievanceData);
-
-    res.json({
-        message: "Grievance submitted successfully",
-        data: grievanceData
-    });
-});
-
-const PORT = 3000;
+// 🚀 SERVER START
+const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
 });
->>>>>>> Stashed changes
