@@ -140,13 +140,9 @@ _Add complaint form screenshot here_
 
 ---
 
-# 👩‍💻 Developer
-
-**Nithya Goud**  
-Reliance Foundation Scholar · GSSoC 2025 Contributor · BPP University Essay Prize Winner
-
-🔗 LinkedIn  
-🔗 GitHub
+👩‍💻 Developer
+Nithya Goud — Reliance Foundation Scholar · BPP University Essay Prize Winner · GSSoC 2025 Contributor
+🔗 LinkedIn · GitHub
 
 ---
 
