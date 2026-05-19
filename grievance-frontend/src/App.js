@@ -10,7 +10,7 @@ function App() {
   // 🔄 Fetch grievances
   const fetchGrievances = async () => {
     try {
-      const res = await fetch("http://localhost:3000/api/grievances");
+      const res = await fetch("http://localhost:5000/api/grievances");
       const data = await res.json();
 
       console.log("API RESPONSE:", data);
@@ -29,7 +29,7 @@ function App() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    await fetch("http://localhost:3000/api/grievances", {
+    await fetch("http://localhost:5000/api/grievances", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -44,7 +44,7 @@ function App() {
   // ❌ DELETE grievance
   const handleDelete = async (id) => {
     try {
-      await fetch(`http://localhost:3000/api/grievances/${id}`, {
+      await fetch(`http://localhost:5000/api/grievances/${id}`, {
         method: "DELETE",
       });
 
