@@ -6,6 +6,11 @@ const grievanceSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
+    priority: {
+    type: String,
+    enum: ["high", "medium", "low"],
+    default: "medium"
+},
     status: {
         type: String,
         enum: ["pending", "resolved"],
