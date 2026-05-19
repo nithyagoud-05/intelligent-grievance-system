@@ -139,10 +139,17 @@ _Add complaint form screenshot here_
 - 🗺️ Department-based complaint routing
 
 ---
+---
 
-👩‍💻 Developer
-Nithya Goud — Reliance Foundation Scholar · BPP University Essay Prize Winner · GSSoC 2025 Contributor
-🔗 LinkedIn · GitHub
+## 👩‍💻 Developer
+
+**Nithya Goud** — Reliance Foundation Scholar · BPP University Essay Prize Winner · GSSoC 2025 Contributor
+
+🔗 [LinkedIn](https://www.linkedin.com/in/elikatti-nithya-goud/) · [GitHub](https://github.com/nithyagoud-05)
+
+---
+
+⭐ Star this repo if you found it useful!
 
 ---
 
