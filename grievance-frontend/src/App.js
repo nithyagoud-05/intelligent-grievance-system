@@ -138,7 +138,10 @@ export default function App() {
     }
   };
 
-  useEffect(() => { fetchGrievances(); }, [filterStatus, search, filterPriority]);
+ useEffect(() => {
+  fetchGrievances();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+}, [filterStatus, search, filterPriority]);
 
   const handleSubmit = async () => {
     if (!issue || issue.trim().length < 5) {
