@@ -138,7 +138,7 @@ export default function App() {
     }
   };
 
-  useEffect(() => { fetchGrievances(); }, [filterStatus, search]);
+  useEffect(() => { fetchGrievances(); }, [filterStatus, search, filterPriority]);
 
   const handleSubmit = async () => {
     if (!issue || issue.trim().length < 5) {
