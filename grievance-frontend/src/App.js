@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const API = "http://localhost:5000/api/grievances";
+const API = "https://intelligent-grievance-system.onrender.com/api/grievances";
 
 const styles = {
   nav: {
