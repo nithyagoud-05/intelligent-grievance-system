@@ -1,6 +1,8 @@
 const Grievance = require("../models/Grievance");
 
+// =====================
 // CREATE
+// =====================
 exports.createGrievance = async (req, res, next) => {
   try {
     const { issue, priority, status } = req.body;
@@ -28,22 +30,48 @@ exports.createGrievance = async (req, res, next) => {
   }
 };
 
-// GET ALL
+// =====================
+// GET ALL (PUBLIC)
+// =====================
 exports.getAllGrievances = async (req, res, next) => {
   try {
-    const grievances = await Grievance.find()
-      .sort({ createdAt: -1 });
+    const data = await Grievance.find().sort({ createdAt: -1 });
 
     res.json({
       success: true,
-      data: grievances,
+      data,
     });
   } catch (err) {
     next(err);
   }
 };
 
+// =====================
+// GET ONE
+// =====================
+exports.getGrievanceById = async (req, res, next) => {
+  try {
+    const data = await Grievance.findById(req.params.id);
+
+    if (!data) {
+      return res.status(404).json({
+        success: false,
+        message: "Grievance not found",
+      });
+    }
+
+    res.json({
+      success: true,
+      data,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// =====================
 // GET MY
+// =====================
 exports.getMyGrievances = async (req, res, next) => {
   try {
     const data = await Grievance.find({
@@ -59,36 +87,47 @@ exports.getMyGrievances = async (req, res, next) => {
   }
 };
 
+// =====================
 // UPDATE
+// =====================
 exports.updateGrievance = async (req, res, next) => {
   try {
-    const updated = await Grievance.findByIdAndUpdate(
+    const data = await Grievance.findByIdAndUpdate(
       req.params.id,
       req.body,
       { new: true }
     );
 
+    if (!data) {
+      return res.status(404).json({
+        success: false,
+        message: "Not found",
+      });
+    }
+
     res.json({
       success: true,
-      data: updated,
+      data,
     });
   } catch (err) {
     next(err);
   }
 };
 
-// DELETE (SAFE)
+// =====================
+// DELETE
+// =====================
 exports.deleteGrievance = async (req, res, next) => {
   try {
-    const deleted = await Grievance.findOneAndDelete({
+    const data = await Grievance.findOneAndDelete({
       _id: req.params.id,
       user: req.user.id,
     });
 
-    if (!deleted) {
+    if (!data) {
       return res.status(404).json({
         success: false,
-        message: "Not found or not yours",
+        message: "Not found or unauthorized",
       });
     }
 

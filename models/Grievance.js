@@ -2,11 +2,7 @@ const mongoose = require("mongoose");
 
 const grievanceSchema = new mongoose.Schema(
   {
-    issue: {
-      type: String,
-      required: true,
-      trim: true,
-    },
+    issue: { type: String, required: true, trim: true },
 
     priority: {
       type: String,
@@ -20,7 +16,6 @@ const grievanceSchema = new mongoose.Schema(
       default: "pending",
     },
 
-    // ✅ FIX: REQUIRED for JWT ownership
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
