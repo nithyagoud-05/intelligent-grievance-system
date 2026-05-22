@@ -4,6 +4,7 @@ import Login from "./Login";
 const API = "https://intelligent-grievance-system.onrender.com/api/grievances";
 
 export default function App() {
+  console.log("VERSION 1401907");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [grievances, setGrievances] = useState([]);
   const [issue, setIssue] = useState("");
