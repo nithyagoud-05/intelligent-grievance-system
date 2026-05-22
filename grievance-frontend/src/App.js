@@ -39,9 +39,13 @@ export default function App() {
     }
   };
 
-  useEffect(() => {
-    if (isLoggedIn) fetchGrievances();
-  }, [isLoggedIn]);
+useEffect(() => {
+  if (!isLoggedIn) return;
+
+  fetchGrievances();
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+}, [isLoggedIn]);
 
   const handleSubmit = async () => {
     if (!issue.trim() || issue.trim().length < 5) return;
