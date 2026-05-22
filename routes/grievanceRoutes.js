@@ -1,14 +1,14 @@
 const express = require("express");
 const router = express.Router();
 
-const authMiddleware = require("../middleware/authMiddleware");
+const { protect } = require("../middleware/authMiddleware");
 const grievanceController = require("../controller/grievanceController");
 
-// 🔐 Protected routes (IMPORTANT PART)
-router.post("/create", authMiddleware, grievanceController.createGrievance);
+// 🔐 Protected routes
+router.post("/create", protect, grievanceController.createGrievance);
 
-router.get("/my", authMiddleware, grievanceController.getMyGrievances);
+router.get("/my", protect, grievanceController.getMyGrievances);
 
-router.delete("/:id", authMiddleware, grievanceController.deleteGrievance);
+router.delete("/:id", protect, grievanceController.deleteGrievance);
 
 module.exports = router;
