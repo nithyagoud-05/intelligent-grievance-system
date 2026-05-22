@@ -4,53 +4,7 @@ import Login from "./Login";
 const API =
   "https://intelligent-grievance-system.onrender.com/api/grievances";
 
-const styles = {
-  nav: {
-    background: "white",
-    borderBottom: "0.5px solid #e5e7eb",
-    padding: "0 28px",
-    height: "52px",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-    position: "sticky",
-    top: 0,
-    zIndex: 10,
-  },
-  logo: { fontSize: "16px", fontWeight: "500", color: "#1a1a1a" },
-  logoSpan: { color: "#534AB7" },
-  page: {
-    background: "#f9fafb",
-    padding: "24px 28px",
-    minHeight: "100vh",
-  },
-  card: {
-    background: "white",
-    border: "0.5px solid #e5e7eb",
-    borderRadius: "12px",
-    padding: "18px 20px",
-    marginBottom: "16px",
-  },
-  submitBtn: {
-    width: "100%",
-    background: "#534AB7",
-    color: "#fff",
-    padding: "10px",
-    borderRadius: "8px",
-    border: "none",
-    marginTop: "10px",
-    cursor: "pointer",
-  },
-  gItem: {
-    padding: "12px 0",
-    borderBottom: "0.5px solid #e5e7eb",
-    display: "flex",
-    justifyContent: "space-between",
-  },
-};
-
 export default function App() {
-  // 🔐 AUTH STATE (CLEAN VERSION)
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const [grievances, setGrievances] = useState([]);
@@ -60,12 +14,19 @@ export default function App() {
   const [loading, setLoading] = useState(false);
 
   // =====================
-  // CHECK LOGIN ON LOAD
+  // FORCE LOGIN CHECK (SAFE)
   // =====================
   useEffect(() => {
     const token = localStorage.getItem("token");
 
-    if (token && token !== "undefined" && token !== "null") {
+    // strict validation
+    const validToken =
+      token &&
+      token !== "undefined" &&
+      token !== "null" &&
+      token.trim() !== "";
+
+    if (validToken) {
       setIsLoggedIn(true);
     } else {
       setIsLoggedIn(false);
@@ -76,8 +37,7 @@ export default function App() {
   // LOGOUT
   // =====================
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
+    localStorage.clear();
     setGrievances([]);
     setIsLoggedIn(false);
   };
@@ -97,7 +57,7 @@ export default function App() {
         },
       });
 
-      if (res.status === 401) return handleLogout();
+      if (!res.ok) return handleLogout();
 
       const data = await res.json();
       setGrievances(data.data || []);
@@ -172,10 +132,26 @@ export default function App() {
   };
 
   // =====================
-  // LOGIN SCREEN
+  // 🔐 LOGIN SCREEN (FORCED)
   // =====================
   if (!isLoggedIn) {
-    return <Login onLogin={() => setIsLoggedIn(true)} />;
+    return (
+      <Login
+        onLogin={() => {
+          const token = localStorage.getItem("token");
+
+          const valid =
+            token &&
+            token !== "undefined" &&
+            token !== "null" &&
+            token.trim() !== "";
+
+          if (valid) {
+            setIsLoggedIn(true);
+          }
+        }}
+      />
+    );
   }
 
   // =====================
@@ -183,43 +159,28 @@ export default function App() {
   // =====================
   return (
     <div>
-      <div style={styles.nav}>
-        <div style={styles.logo}>
-          Grievance<span style={styles.logoSpan}>IQ</span>
-        </div>
-
+      <div style={{ padding: "10px", background: "#fff" }}>
+        <h3>GrievanceIQ</h3>
         <button onClick={handleLogout}>Logout</button>
       </div>
 
-      <div style={styles.page}>
+      <div style={{ padding: "20px" }}>
         <h2>Dashboard</h2>
 
-        <div style={styles.card}>
-          <textarea
-            placeholder="Enter issue..."
-            value={issue}
-            onChange={(e) => setIssue(e.target.value)}
-          />
+        <textarea
+          placeholder="Enter issue..."
+          value={issue}
+          onChange={(e) => setIssue(e.target.value)}
+        />
 
-          <button
-            style={styles.submitBtn}
-            onClick={handleSubmit}
-            disabled={loading}
-          >
-            {loading ? "Submitting..." : "Submit"}
-          </button>
-        </div>
+        <button onClick={handleSubmit} disabled={loading}>
+          {loading ? "Submitting..." : "Submit"}
+        </button>
 
-        <div style={styles.card}>
+        <div>
           {grievances.map((g) => (
-            <div key={g._id} style={styles.gItem}>
-              <div>
-                <b>{g.issue}</b>
-                <div style={{ fontSize: "12px" }}>
-                  {g.priority} | {g.status}
-                </div>
-              </div>
-
+            <div key={g._id}>
+              <b>{g.issue}</b> | {g.status}
               <button onClick={() => handleDelete(g._id)}>Delete</button>
             </div>
           ))}
